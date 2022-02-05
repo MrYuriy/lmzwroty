@@ -1,0 +1,16 @@
+{% extends "gen_protocol/base.html" %}
+
+{% block title %} Print protokol {% endblock %}
+{% block content %}
+    <form action="{% url 'generate_pdf_lm' %}" target="_blank">
+        <div class="input-group mb-3" type="number", >
+            <span class="input-group-text" id="inputGroup-sizing-default">Nr Order:</span>
+            <input name="nrorder", id="nrorder" type="number" class="form-control" required aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+          </div>
+        <input type="submit" value="Generate" id='download'target="_blank" class="btn btn-primary">
+    </form>
+    <script type="text/javascript" src="{{ STATIC_URL }} /static/jquery-3.6.0.min.js"> </script>
+    <!-- <script type="text/javascript" src="{{ STATIC_URL }} /static/js/print_order.js"> </script> -->
+
+    
+{% endblock %}

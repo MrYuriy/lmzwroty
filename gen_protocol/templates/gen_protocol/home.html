@@ -1,0 +1,29 @@
+{% extends "gen_protocol/base.html" %}
+
+{% block title %} Home page {% endblock %}
+{% block content %}
+
+    <form action="{% url 'new_order' %}">
+    <input type="submit" class="btn btn-secondary" value="New order">
+    </form>
+    <br>
+    <form action="{% url 'generate_order_pdf'%}">
+        <input type="submit" class="btn btn-secondary" value="Print order LM ">
+    </form>
+    <br>
+    <form action="{% url 'generate_pdf_order_todey'%}">
+        <input type="submit" class="btn btn-secondary" value="Print returned products  ">
+    </form>
+    <br>
+    <form action="{% url 'gswrite' %}">
+        <input type="submit" class="btn btn-secondary" value='Write to EXSEL'>
+    </form>
+    <br>
+    <form action="{% url 'admin:index' %}">
+        <input type="submit" class="btn btn-secondary" value='Admin'>
+    </form>
+    <br>
+</div>  
+{% endblock %}
+
+
