@@ -204,15 +204,21 @@ def generate_pdf_returned_products(request):
     date_to_print = datetime.strptime(date_to_print,'%d/%m/%Y')
     pdfmetrics.registerFont(TTFont('FreeSans', 'freesans/FreeSans.ttf'))
     my_canvas = canvas.Canvas(buffer)
-    my_canvas.drawImage('static/img/returned_products_order.jpg' ,-10, 0, width=622, height=860)
+    my_canvas.drawImage('static/img/returned_products_order.jpg' ,-10, 0, width=622, height=850)
     my_canvas.setFont('FreeSans', 12)#розмір шрифту і вид шрифту   
     list_order_today = Order.objects.filter(date_writes = date_to_print)#date.today() dont foget set tis pharamether
-    #list_order_today = Order.objects.all()
-    Y=615
+    list_order_today = Order.objects.all()
+    Y=610
     counter = 0
     for order in list_order_today:
         nrorder = order.nr_order
         #print(nrorder)
+        if counter==21:
+                    my_canvas.showPage()
+                    my_canvas.setFont('FreeSans', 12)
+                    my_canvas.drawImage('static/img/returned_products_order.jpg' ,-10, 0, width=622, height=850)
+                    Y=610
+                    counter=0
         all_about_order=get_order_detail(nrorder)
         my_canvas.drawString(440,Y,str(all_about_order['tape_of_delivery']))
         my_canvas.drawString(500,Y,str(nrorder))
@@ -223,11 +229,11 @@ def generate_pdf_returned_products(request):
                 if counter==21:
                     my_canvas.showPage()
                     my_canvas.setFont('FreeSans', 12)
-                    my_canvas.drawImage('static/img/returned_products_order.jpg' ,-10, 0, width=622, height=860)
-                    Y=615
+                    my_canvas.drawImage('static/img/returned_products_order.jpg' ,-10, 0, width=622, height=850)
+                    Y=610
                     counter=0
                 my_canvas.drawString(55,Y,str(product[0]))
-                name_of_product = str(return_name_of_product(product[0]))[:25]# !Зробити нормалтний вивід назви продукту
+                name_of_product = str(return_name_of_product(product[0]))[:25]
                 my_canvas.drawString(131,Y, name_of_product )
                 my_canvas.drawString(310,Y,str(product[1]))
                 my_canvas.drawString(380,Y,str(dicts[1]))
