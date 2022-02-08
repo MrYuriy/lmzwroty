@@ -62,9 +62,9 @@ def show_name(request):
 def saveorder(request):
     nrorder = request.GET.get('nrorder')
     tapeofdelivery = request.GET.get('tapydelivery')
-    
-    order = Order( nr_order=int(nrorder), tape_of_delivery = tapeofdelivery,date_writes=date.today())
-    order.save()
+    if (nrorder!='' and tapeofdelivery!=''  ):
+        order = Order( nr_order=int(nrorder), tape_of_delivery = tapeofdelivery,date_writes=date.today())
+        order.save()
     # print(order)
     return HttpResponse(status = 200)
 
@@ -74,6 +74,9 @@ def add_product_to_order(request):
     quantity = int(request.GET.get('quantity'))
     quantity_not_damaget = int(request.GET.get('quantity_not_damaget'))
     q_damage_products = int(quantity)-int(quantity_not_damaget)
+    if ( sku_product=='' or quantity==''or quantity_not_damaget=='' ):
+        return HttpResponse(status = 200)
+
     name_of_product = return_name_of_product(sku_product)
 
     order = Order.objects.filter(nr_order=nrorder)[0]
