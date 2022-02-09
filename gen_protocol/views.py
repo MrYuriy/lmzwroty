@@ -18,11 +18,14 @@ import os
 #import parser 
 from .parser import get_sku_from_website_LM
 
-def return_name_of_product (sku):
+def return_name_of_product (sku_r):
     try:
-       
-        name_of_product = SkuName.objects.filter(sku = int(sku))[0].name_of_produckt
-       
+        print("AAAAAAAAAA")
+        name_of_product = SkuName.objects.filter(sku = int(sku_r))[0].name_of_produckt
+        #print(SkuName.objects.filter(sku = int ))
+        print (name_of_product)
+        if (len(name_of_product)<=24):
+            return name_of_product
         if name_of_product[24]!=" ":
             name_of_product = name_of_product[:24]
             
@@ -31,14 +34,16 @@ def return_name_of_product (sku):
             name_of_product = ' '.join(map(str, name_of_product))
         else:
             name_of_product = name_of_product[:24]
+        return name_of_product
     except:
         try :
-            name_of_product= get_sku_from_website_LM(sku)
-            product = SkuName(sku=sku, name_of_produckt = name_of_product)
+            name_of_product= get_sku_from_website_LM(sku_r)
+            product = SkuName(sku=sku_r, name_of_produckt = name_of_product)
             product.save()
+         
         except:
             name_of_product = "name not found"
-    return name_of_product
+        return name_of_product
 
 def home(request):
     return render(request, 'gen_protocol/home.html')
