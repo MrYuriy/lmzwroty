@@ -1,6 +1,21 @@
 {% extends "gen_protocol/base.html" %}
 {% block title %} Order form {% endblock %}
+<div  class="btn-group "></div>
+{%block navigation %}
+
+  <form action="{% url 'new_order' %}">
+    <input type="submit" class="btn btn-secondary" value="New ">
+    </form>
+  
+  <form action="{% url 'generate_pdf_lm'%}" target="_blank" >
+    <input type="number", name="nrorder", value="{{ nrorder }}" , id="nrorder", hidden>
+    <input type="submit" class="btn btn-secondary" value="Print" id="download">
+  </form>
+
+  {% endblock %}
+</div>
 {% block content %}
+
 <h4>Nr Order: {{ nrorder }}</h4>
 <form action="{% url 'order_form' %}">
     <input type="number", name="nrorder", value="{{ nrorder }}" , id="nrorder", hidden>
@@ -35,11 +50,14 @@
     <input type="number" name="quantity_not_damaget" id="quantity_not_damaget",value="0">
     <br> -->
     <input type="submit" value="Nexs" id="next" class="btn btn-primary" >
+    <!-- <input type="submit" class="btn btn-secondary" value="download" id="download"> -->
 </form>
+
 
 <script type="text/javascript" src="{{ STATIC_URL }} /static/jquery-3.6.0.min.js"> </script>
 <script type="text/javascript" src="{{ STATIC_URL }} /static/js/skurequest.js"> </script>
 <script type="text/javascript" src="{{ STATIC_URL }} /static/js/add_product_to_order.js"> </script>
+<script type="text/javascript" src="{{ STATIC_URL }} /static/js/print_order_lm.js"> </script>
 
 
 {% endblock %}

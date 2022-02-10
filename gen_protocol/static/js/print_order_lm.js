@@ -2,7 +2,7 @@ $("#download").click(function () {
     var nrorder = $('#nrorder').val();
     
     $.ajax({
-        url: 'gen_pdf' ,
+        url: 'generate-pdf-lm' ,
         data: {
           'nrorder': nrorder,
         },

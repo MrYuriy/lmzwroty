@@ -20,10 +20,10 @@ from .parser import get_sku_from_website_LM
 
 def return_name_of_product (sku_r):
     try:
-        print("AAAAAAAAAA")
+        
         name_of_product = SkuName.objects.filter(sku = int(sku_r))[0].name_of_produckt
         #print(SkuName.objects.filter(sku = int ))
-        print (name_of_product)
+       
         if (len(name_of_product)<=24):
             return name_of_product
         if name_of_product[24]!=" ":
@@ -169,6 +169,7 @@ def get_order_detail(nrorder):
 
 
 def generate_pdf_lm(request):
+    print("okkkk")
     nrorder = request.GET.get('nrorder')
     orderdetail = get_order_detail(nrorder)
     list_not_damage_product = orderdetail['not_damage']
@@ -215,7 +216,7 @@ def generate_pdf_returned_products(request):
     my_canvas.drawImage('static/img/returned_products_order.jpg' ,-10, 0, width=622, height=850)
     my_canvas.setFont('FreeSans', 12)#розмір шрифту і вид шрифту   
     list_order_today = Order.objects.filter(date_writes = date_to_print)#date.today() dont foget set tis pharamether
-    list_order_today = Order.objects.all()
+    #list_order_today = Order.objects.all()
     Y=610
     counter = 0
     for order in list_order_today:
