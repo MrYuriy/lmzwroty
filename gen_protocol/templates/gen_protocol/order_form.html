@@ -1,19 +1,6 @@
 {% extends "gen_protocol/base.html" %}
 {% block title %} Order form {% endblock %}
-<div  class="btn-group "></div>
-{%block navigation %}
 
-  <form action="{% url 'new_order' %}">
-    <input type="submit" class="btn btn-secondary" value="New ">
-    </form>
-  
-  <form action="{% url 'generate_pdf_lm'%}" target="_blank" >
-    <input type="number", name="nrorder", value="{{ nrorder }}" , id="nrorder", hidden>
-    <input type="submit" class="btn btn-secondary" value="Print" id="download">
-  </form>
-
-  {% endblock %}
-</div>
 {% block content %}
 
 <h4>Nr Order: {{ nrorder }}</h4>
@@ -25,19 +12,14 @@
         <input type="number" name="sku" id="sku" autofocus="" class="form-control" required aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
       </div>
       
-    <!-- <label for="fname">SKU:</label>
-    <input type="number" name="sku" id="sku" autofocus=""><br>
-    <input tape='text'  id="p-text" value="Name of product">  -->
+   
     <p id="p-text">Name of product : </p>
    
     <div class="input-group mb-3" type="number", >
         <span class="input-group-text" id="inputGroup-sizing-default">Quantity:</span>
         <input type="number", name="quantity" id="quantity",value=0  class="form-control" required aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
       </div>
-    
-    <!-- <label for="fname">quantity:</label>
-    <input type="number", name="quantity" id="quantity",value=0>
-    <br> -->
+  
 
 
     <div class="input-group mb-3" type="number", >
@@ -45,12 +27,10 @@
         <input type="number" name="quantity_not_damaget" id="quantity_not_damaget",value="0" class="form-control" required aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
       </div>
 
-
-    <!-- <label for="fname">Quantity_not_damaget:</label>
-    <input type="number" name="quantity_not_damaget" id="quantity_not_damaget",value="0">
-    <br> -->
+   
     <input type="submit" value="Nexs" id="next" class="btn btn-primary" >
-    <!-- <input type="submit" class="btn btn-secondary" value="download" id="download"> -->
+   
+   
 </form>
 
 
@@ -62,6 +42,18 @@
 
 {% endblock %}
 
+{%block navigation %}
+  
+<form action="{% url 'new_order' %}">
+  <input type="submit" class="btn btn-secondary" value="New ">
+  </form>
 
+<form action="{% url 'generate_pdf_lm'%}" target="_blank" >
+  <input type="number", name="nrorder", value="{{ nrorder }}" , id="nrorder", hidden>
+  <input type="submit" class="btn btn-secondary" value="Print" id="download">
+</form>
 
+{% endblock %}
 
+ 
+  

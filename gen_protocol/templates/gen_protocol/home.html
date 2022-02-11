@@ -4,17 +4,17 @@
 {%block navigation %}
 {% endblock %}
 {% block content %}
-
+<div class="btn-group-vertical" margin:10>
     <form action="{% url 'new_order' %}">
-    <input type="submit" class="btn btn-secondary" value="New order">
+        <input type="submit" class="btn btn-secondary" value=" New order     ">
     </form>
-    <br>
+   <br>
     <form action="{% url 'generate_order_pdf'%}">
-        <input type="submit" class="btn btn-secondary" value="Print order LM ">
+        <input type="submit" class="btn btn-secondary" value="Print order LM">
     </form>
     <br>
     <form action="{% url 'generate_pdf_order_todey'%}">
-        <input type="submit" class="btn btn-secondary" value="Print returned products  ">
+        <input type="submit" class="btn btn-secondary" value="Print  ZWROTY">
     </form>
     <br>
     <form action="{% url 'gswrite' %}">
@@ -22,9 +22,9 @@
     </form>
     <br>
     <form action="{% url 'admin:index' %}">
-        <input type="submit" class="btn btn-secondary" value='Admin'>
+        <input type="submit" class="btn btn-secondary" value='      Admin       '>
     </form>
-    <br>
+    
 </div>  
 {% endblock %}
 
