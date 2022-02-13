@@ -1,0 +1,17 @@
+server{
+    server_name 85.90.244.51; 
+    listen 8005;
+    client_max_body_size 100M;
+    location /media {
+        alias /home/sats/projects/zwroty/src/media;
+    }
+    location /static {
+        alias /home/jurgeon/projects/zwroty/src/static_root;
+    }
+    location / {
+        uwsgi_pass unix:/home/sats/projects/zwroty/src/config/zwroty.sock;
+        include /etc/nginx/uwsgi_params;
+    }
+
+
+}
