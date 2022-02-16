@@ -16,7 +16,7 @@ import apiclient.discovery
 from oauth2client.service_account import ServiceAccountCredentials
 import os
 #import parser 
-from .parser import get_sku_from_website_LM
+from .parser import get_name_sku_from_website_LM
 
 def return_name_of_product (sku_r):
     try:
@@ -37,7 +37,7 @@ def return_name_of_product (sku_r):
         return name_of_product
     except:
         try :
-            name_of_product= get_sku_from_website_LM(sku_r)
+            name_of_product= get_name_sku_from_website_LM(sku_r)['name_of_product']
             product = SkuName(sku=sku_r, name_of_produckt = name_of_product)
             product.save()
          
@@ -75,7 +75,7 @@ def saveorder(request):
 
 def add_product_to_order(request):
     nrorder = request.GET.get('nrorder')
-    sku_product = int(request.GET.get('sku'))
+    sku_product = get_name_sku_from_website_LM(int(request.GET.get('sku')))['sku']
     quantity = int(request.GET.get('quantity'))
     quantity_not_damaget = int(request.GET.get('quantity_not_damaget'))
     q_damage_products = int(quantity)-int(quantity_not_damaget)
@@ -170,7 +170,7 @@ def get_order_detail(o_id):
 
 
 def generate_pdf_lm(request):
-    print("okkkk")
+    #print("okkkk")
     nrorder = request.GET.get('nrorder')
     order = Order.objects.filter(nr_order=nrorder).latest('id')
     orderdetail = get_order_detail(order.id)
