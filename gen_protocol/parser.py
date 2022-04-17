@@ -1,5 +1,3 @@
-import re
-from urllib import response
 import requests
 from bs4 import BeautifulSoup
 
@@ -28,9 +26,6 @@ def get_name_sku_of_product(url):
     name_of_product = soup.find('div', class_="product-description").find('div',class_="product-title" ).find('h1').string
     sku = int(soup.find('div', class_="product-description").find('div', class_="ref-number").find('span').string)
     resolt = {"name_of_product":name_of_product, "sku":sku}
-    #print("ok")
-    print(sku)
-    #print(name_of_product)
     return(resolt)
-#def get_sku_ean(url):
+
     

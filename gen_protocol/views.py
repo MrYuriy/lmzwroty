@@ -16,7 +16,38 @@ import apiclient.discovery
 from oauth2client.service_account import ServiceAccountCredentials
 import os
 #import parser 
-from .parser import get_name_sku_from_website_LM
+#from .parser import get_name_sku_from_website_LM
+
+import requests
+from bs4 import BeautifulSoup
+
+def get_name_sku_from_website_LM(sku):
+    
+    link = f"https://www.leroymerlin.pl/szukaj.html?q={sku}&sprawdz=true"
+    name_of_product_and_sku =get_name_sku_of_product(link)
+    
+    return(name_of_product_and_sku)
+
+def get_soup(url):
+    
+    r = requests.get(url )
+    
+    if r == None:
+        return None
+    else:
+        soup = BeautifulSoup(r.text, 'lxml')
+    return soup
+
+
+
+def get_name_sku_of_product(url):
+    soup = get_soup(url)
+
+    name_of_product = soup.find('div', class_="product-description").find('div',class_="product-title" ).find('h1').string
+    sku = int(soup.find('div', class_="product-description").find('div', class_="ref-number").find('span').string)
+    resolt = {"name_of_product":name_of_product, "sku":sku}
+    return(resolt)
+
 
 def return_name_of_product (sku_r):
     try:
@@ -75,7 +106,7 @@ def saveorder(request):
 
 def add_product_to_order(request):
     nrorder = request.GET.get('nrorder')
-    sku_product = get_name_sku_from_website_LM(int(request.GET.get('sku')))['sku']
+    sku_product = int(request.GET.get('sku'))
     quantity = int(request.GET.get('quantity'))
     quantity_not_damaget = int(request.GET.get('quantity_not_damaget'))
     q_damage_products = int(quantity)-int(quantity_not_damaget)
