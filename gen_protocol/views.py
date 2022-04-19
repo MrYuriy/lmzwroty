@@ -76,6 +76,9 @@ def return_name_of_product (sku_r):
             name_of_product = "name not found"
         return name_of_product
 
+
+ 
+
 def home(request):
     return render(request, 'gen_protocol/home.html')
 
