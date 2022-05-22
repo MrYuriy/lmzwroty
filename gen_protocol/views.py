@@ -109,7 +109,7 @@ def saveorder(request):
 
 def add_product_to_order(request):
     nrorder = request.GET.get('nrorder')
-    sku_product = int(request.GET.get('sku'))
+    sku_product = get_name_sku_from_website_LM(int(request.GET.get('sku')))['sku']
     quantity = int(request.GET.get('quantity'))
     quantity_not_damaget = int(request.GET.get('quantity_not_damaget'))
     q_damage_products = int(quantity)-int(quantity_not_damaget)
