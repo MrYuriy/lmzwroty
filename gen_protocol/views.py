@@ -133,8 +133,6 @@ def add_product_to_order(request):
         order_product.product = new_product
         order_product.save()
 
-        # print(new_product)
-        # print("OK")
     else:
         new_product = Product(name = name_of_product,sku=sku_product, quantity=quantity, quantity_not_damaget=quantity_not_damaget , quantity_damage=q_damage_products)
         new_product.save()
@@ -383,3 +381,6 @@ def gswrite(request):
     ).execute()
 
     return HttpResponse(status = 200)
+
+    def do_nothing():
+        return None
