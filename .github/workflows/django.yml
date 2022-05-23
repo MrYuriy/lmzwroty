@@ -1,0 +1,19 @@
+name: Django CI
+
+on:
+  push:
+    branches: [ dev ]
+
+jobs:
+  heroku-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+      - name: Deploy to Heroku
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          branch: dev
+          heroku_api_key: f9499cff-f81a-419b-b966-d0be7a1366c7
+          heroku_app_name: zwrotylm
+          heroku_email: yuriybabiyk@gmail.com
