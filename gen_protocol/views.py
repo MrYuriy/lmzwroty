@@ -381,6 +381,3 @@ def gswrite(request):
     ).execute()
 
     return HttpResponse(status = 200)
-
-    def do_nothing():
-        return None
