@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 import os
+import django_heroku
+
 #import dj_database_url
 
 
@@ -90,7 +92,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'djongo', # заінсталь лібу pip install djongo
         'NAME': 'Cluster0', # в мене називалось Cluster0
-        'ENFORCE_SCHEMA': False,
+        #'ENFORCE_SCHEMA': False,
         'CLIENT': {
             'host': f"mongodb+srv://yurii:pytinxyilo!21@cluster0.lqaoc.mongodb.net/?retryWrites=true&w=majority",
             'authMechanism': 'SCRAM-SHA-1'
@@ -147,3 +149,4 @@ STATICFILES_DIRS = [
 # db_from_env = dj_database_url.config()
 # DATABASES['default'].update(db_from_env)
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+django_heroku.settings(locals())
