@@ -1,4 +1,4 @@
-from itertools import product
+
 from django.shortcuts import render
 from django.http import JsonResponse, request, FileResponse
 from reportlab.pdfbase.pdfdoc import count
@@ -9,6 +9,7 @@ import io
 from reportlab.pdfgen import canvas
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
+#from mongoengine import *
 
 from datetime import date, datetime
 import httplib2
@@ -17,6 +18,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 import os
 #import parser 
 #from .parser import get_name_sku_from_website_LM
+import pymongo
 
 import requests
 from bs4 import BeautifulSoup
@@ -102,8 +104,15 @@ def saveorder(request):
     nrorder = request.GET.get('nrorder')
     tapeofdelivery = request.GET.get('tapydelivery')
     if (nrorder!='' and tapeofdelivery!=''  ):
-        order = Order( nr_order=int(nrorder), tape_of_delivery = tapeofdelivery,date_writes=date.today())
+        order = Order( nr_order=int(nrorder), tape_of_delivery = tapeofdelivery, date_writes=date.today())
+        # Order.insertOne( {"nr_order":int(nrorder), 
+        #                 "tape_of_delivery ":tapeofdelivery, 
+        #                 "date_writes":date.today()})
         order.save()
+
+
+
+
     # print(order)
     return HttpResponse(status = 200)
 
@@ -118,7 +127,7 @@ def add_product_to_order(request):
 
     name_of_product = return_name_of_product(sku_product)
 
-    order = Order.objects.filter(nr_order=nrorder).latest('id')
+    order = Order.objects.filter(nr_order=nrorder).last()
     id_order = order.id
     #
     if OrderProduct.objects.filter(order_id=id_order,product__sku=sku_product ):
@@ -204,7 +213,7 @@ def get_order_detail(o_id):
 def generate_pdf_lm(request):
     #print("okkkk")
     nrorder = request.GET.get('nrorder')
-    order = Order.objects.filter(nr_order=nrorder).latest('id')
+    order = Order.objects.filter(nr_order=nrorder).last()
     orderdetail = get_order_detail(order.id)
     list_not_damage_product = orderdetail['not_damage']
     list_damage_product = orderdetail['damage']

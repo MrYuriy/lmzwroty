@@ -16,18 +16,19 @@ class Product(models.Model):
 class Order(models.Model):
     palete = "P"
     box = "C"
-    date_writes = models.DateField()
     TAPE_OF_DELIVERY_CHOICES = {
             (palete, "P"),
             (box, "C")
         }
-
+             
+    date_writes = models.DateField()
     nr_order = models.IntegerField()
-    tape_of_delivery = models.CharField(
-            max_length=1,
-            choices=TAPE_OF_DELIVERY_CHOICES,
-            default=box
-        )
+    # tape_of_delivery = models.CharField(
+    #         max_length=1,
+    #         choices=TAPE_OF_DELIVERY_CHOICES,
+    #         default=box
+    #     )
+    tape_of_delivery = models.CharField(max_length=10)
     def __str__(self):
         return 'Order {}'.format(str(self.nr_order))
     
@@ -44,3 +45,6 @@ class SkuName(models.Model):
 
     def __str__(self):
         return self.name_of_produckt
+
+
+        

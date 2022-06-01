@@ -88,11 +88,14 @@ WSGI_APPLICATION = 'zwroty.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'djongo', # заінсталь лібу pip install djongo
+        'NAME': 'Cluster0', # в мене називалось Cluster0
+        'ENFORCE_SCHEMA': False,
+        'CLIENT': {
+            'host': f"mongodb+srv://yurii:pytinxyilo!21@cluster0.lqaoc.mongodb.net/?retryWrites=true&w=majority"
+        }  
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
