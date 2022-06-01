@@ -92,7 +92,8 @@ DATABASES = {
         'NAME': 'Cluster0', # в мене називалось Cluster0
         'ENFORCE_SCHEMA': False,
         'CLIENT': {
-            'host': f"mongodb+srv://yurii:pytinxyilo!21@cluster0.lqaoc.mongodb.net/?retryWrites=true&w=majority"
+            'host': f"mongodb+srv://yurii:pytinxyilo!21@cluster0.lqaoc.mongodb.net/?retryWrites=true&w=majority",
+            'authMechanism': 'SCRAM-SHA-1'
         }  
     }
 }

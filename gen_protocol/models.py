@@ -23,12 +23,12 @@ class Order(models.Model):
              
     date_writes = models.DateField()
     nr_order = models.IntegerField()
-    # tape_of_delivery = models.CharField(
-    #         max_length=1,
-    #         choices=TAPE_OF_DELIVERY_CHOICES,
-    #         default=box
-    #     )
-    tape_of_delivery = models.CharField(max_length=10)
+    tape_of_delivery = models.CharField(
+            max_length=1,
+            choices=TAPE_OF_DELIVERY_CHOICES,
+            default=box
+        )
+    #tape_of_delivery = models.CharField(max_length=10)
     def __str__(self):
         return 'Order {}'.format(str(self.nr_order))
     
