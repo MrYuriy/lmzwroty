@@ -6,19 +6,19 @@
 {% block content %}
 <div class="btn-group-vertical" margin:10>
     <form action="{% url 'new_order' %}">
-        <input type="submit" class="btn btn-secondary" value=" New order     ">
+        <input type="submit" class="btn btn-secondary" value=" Nowe zamówienie ">
     </form>
    <br>
     <form action="{% url 'generate_order_pdf'%}">
-        <input type="submit" class="btn btn-secondary" value="Print order LM">
+        <input type="submit" class="btn btn-secondary" value="Wydrukuj Zamówienie LM">
     </form>
     <br>
     <form action="{% url 'generate_pdf_order_todey'%}">
-        <input type="submit" class="btn btn-secondary" value="Print  ZWROTY">
+        <input type="submit" class="btn btn-secondary" value="Wydrukuj  ZWROTY">
     </form>
     <br>
     <form action="{% url 'gswrite' %}">
-        <input type="submit" class="btn btn-secondary" value='Write to EXSEL'>
+        <input type="submit" class="btn btn-secondary" value='Zapisz do EXCEL'>
     </form>
     <br>
     <form action="{% url 'admin:index' %}">

@@ -4,7 +4,7 @@
 {% block content %}
     <form action="{% url 'generate_pdf_lm' %}" target="_blank">
         <div class="input-group mb-3" type="number", >
-            <span class="input-group-text" id="inputGroup-sizing-default">Nr Order:</span>
+            <span class="input-group-text" id="inputGroup-sizing-default">Nr zamówienia:</span>
             <input name="nrorder", id="nrorder" type="number" class="form-control" required aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
           </div>
         <input type="submit" value="Generate" id='download'target="_blank" class="btn btn-primary">
