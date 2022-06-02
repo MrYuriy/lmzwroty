@@ -13,10 +13,11 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from pathlib import Path
 import os
 import django_heroku
-
+from os import getenv
+from dotenv import load_dotenv, find_dotenv
 #import dj_database_url
 
-
+load_dotenv(find_dotenv())
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 #BASE_DIR = Path(__file__).resolve().parent.parent
@@ -94,7 +95,8 @@ DATABASES = {
         'NAME': 'Cluster0', # в мене називалось Cluster0
         #'ENFORCE_SCHEMA': False,
         'CLIENT': {
-            'host': f"mongodb+srv://yurii:pytinxyilo!21@cluster0.lqaoc.mongodb.net/?retryWrites=true&w=majority",
+            #'host': f"mongodb+srv://yurii:pytinxyilo!21@cluster0.lqaoc.mongodb.net/?retryWrites=true&w=majority",
+            'host': getenv('DATABASE_HOST'),
             'authMechanism': 'SCRAM-SHA-1'
         }  
     }
