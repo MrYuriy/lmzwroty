@@ -97,7 +97,7 @@ DATABASES = {
         'CLIENT': {
             #'host': f"mongodb+srv://yurii:pytinxyilo!21@cluster0.lqaoc.mongodb.net/?retryWrites=true&w=majority",
             'host': getenv('DATABASE_HOST'),
-            'authMechanism': 'SCRAM-SHA-1'
+            #'authMechanism': 'SCRAM-SHA-1'
         }  
     }
 }
@@ -130,7 +130,7 @@ TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
-#USE_TZ = True
+USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
