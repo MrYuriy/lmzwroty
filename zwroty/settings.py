@@ -91,14 +91,12 @@ WSGI_APPLICATION = 'zwroty.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'djongo', # заінсталь лібу pip install djongo
-        'NAME': 'Cluster0', # в мене називалось Cluster0
-        #'ENFORCE_SCHEMA': False,
-        'CLIENT': {
-            #'host': f"mongodb+srv://yurii:pytinxyilo!21@cluster0.lqaoc.mongodb.net/?retryWrites=true&w=majority",
-            'host': getenv('DATABASE_HOST'),
-            #'authMechanism': 'SCRAM-SHA-1'
-        }  
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': getenv('DB_NAME'),
+        'HOST': getenv('DB_HOST'),
+        'PORT': getenv('DB_PORT'),
+        'USER': getenv('DB_USER'),
+        'PASSWORD': getenv('DB_PASSWORD'),
     }
 }
 
@@ -130,7 +128,7 @@ TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
-USE_TZ = True
+#USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
