@@ -48,6 +48,7 @@ def get_name_sku_of_product(url):
     name_of_product = soup.find('div', class_="product-description").find('div',class_="product-title" ).find('h1').string
     sku = int(soup.find('div', class_="product-description").find('div', class_="ref-number").find('span').string)
     resolt = {"name_of_product":name_of_product, "sku":sku}
+    #print (resolt) 
     return(resolt)
 
 
@@ -55,8 +56,9 @@ def return_name_of_product (sku_r):
     try:
         
         name_of_product = SkuName.objects.filter(sku = int(sku_r)).last().name_of_produckt
+        
         #print(SkuName.objects.filter(sku = int ))
-       
+        #name_of_product = get_name_sku_from_website_LM(int(sku_r))[name_of_product]
         if (len(name_of_product)<=24):
             return name_of_product
         if name_of_product[24]!=" ":
@@ -71,9 +73,19 @@ def return_name_of_product (sku_r):
     except:
         try :
             name_of_product= get_name_sku_from_website_LM(sku_r)['name_of_product']
+            sku_r = get_name_sku_from_website_LM(sku_r)['sku']
+           
             product = SkuName(sku=sku_r, name_of_produckt = name_of_product)
             product.save()
-         
+           
+            
+        # except : 
+        #     name_of_product= get_name_sku_from_website_LM(sku_r)['name_of_product']
+        #     print(sku_r)
+        #     #print(name_of_product)
+        #     product = SkuName(sku=sku_r, name_of_produckt = name_of_product)
+        #     product.save()
+        #     print (product)
         except:
             name_of_product = "name not found"
         return name_of_product
@@ -105,9 +117,6 @@ def saveorder(request):
     tapeofdelivery = request.GET.get('tapydelivery')
     if (nrorder!='' and tapeofdelivery!=''  ):
         order = Order( nr_order=int(nrorder), tape_of_delivery = tapeofdelivery, date_writes=date.today())
-        # Order.insertOne( {"nr_order":int(nrorder), 
-        #                 "tape_of_delivery ":tapeofdelivery, 
-        #                 "date_writes":date.today()})
         order.save()
 
 
@@ -273,7 +282,11 @@ def generate_pdf_returned_products(request):
                     counter=0
         all_about_order=get_order_detail(order.id)
         my_canvas.drawString(440,Y,str(all_about_order['tape_of_delivery']))
-        my_canvas.drawString(500,Y,str(nrorder))
+        #my_canvas.drawString(500,Y,str(nrorder))
+        if str(nrorder) == "0":
+            my_canvas.drawString(495,Y,"Brak nr.zam.")
+        else:
+            my_canvas.drawString(500,Y,str(nrorder))
 
         for dicts in [[all_about_order['not_damage'],'P'],[all_about_order['damage'],'U']]:
             
