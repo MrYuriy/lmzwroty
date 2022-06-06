@@ -379,7 +379,8 @@ def gswrite(request):
     coordinateU=int((len(rows)))+1
 
     #datetime_object = datetime.strptime('2022-01-09', "%Y-%m-%d").date()
-    list_order_today = Order.objects.filter(date_writes= date.today())#виклик функції для генерації запису в google sheets
+    #list_order_today = Order.objects.filter(date_writes= date.today())#виклик функції для генерації запису в google sheets
+    list_order_today = Order.objects
     print(list_order_today)
     values = gen_value_for_gsheet(list_order_today)
     #values = gen_value_for_gsheet([555,999])
