@@ -17,6 +17,7 @@ urlpatterns = [
     path('generate-pdf-lm', views.generate_pdf_lm, name='generate_pdf_lm'),
     path('generate-pdf-order-todey', views.generate_protocol_products_order_today, name='generate_pdf_order_todey'),
     path('generate-pdf-returned-products', views.generate_pdf_returned_products, name='generate_pdf_returned_products'),
+    path('write-excel', views.generate_excel_products_order_today, name="generate_excel_order_todey"  ),
     path('gswrite',views.gswrite, name='gswrite'),
    
 ]

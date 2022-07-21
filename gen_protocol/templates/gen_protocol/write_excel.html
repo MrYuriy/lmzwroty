@@ -1,0 +1,18 @@
+{% extends "gen_protocol/base.html" %}
+
+{% block title %} Print protokol {% endblock %}
+{% block content %}
+    <form action="{% url 'gswrite' %}" target="_blank" >
+        <!-- <input type="number", name="nrorder" id="nrorder"> -->
+        <div class="input-group mb-3" type="number", >
+            <span class="input-group-text" id="inputGroup-sizing-default">Data: </span>
+            <input name="date_to_print", id="nrorder" type="date" class="form-control"aria-describedby="inputGroup-sizing-default" value="{{data_today}}">
+          </div>
+         
+        <input type="submit" value="Generate" id='download' target="_blank" class="btn btn-primary">
+    </form>
+    <script type="text/javascript" src="{{ STATIC_URL }} /static/jquery-3.6.0.min.js"> </script>
+    <!-- <script type="text/javascript" src="{{ STATIC_URL }} /static/js/print_order.js"> </script> -->
+
+   
+{% endblock %}

@@ -310,6 +310,9 @@ def generate_pdf_returned_products(request):
     buffer.seek(0)
     return FileResponse(buffer,as_attachment=False, filename="Zwrotu_od_klientow.pdf")
 
+def generate_excel_products_order_today(request):
+    return render(request,'gen_protocol/write_excel.html',{"data_today":date.today().strftime("%Y-%m-%d")})
+ 
 
 def gen_value_for_gsheet(nr_order_list):
     values=[]
@@ -356,6 +359,9 @@ def gen_value_for_gsheet(nr_order_list):
     return values
 
 def gswrite(request):
+    date_to_print = request.GET.get("date_to_print").replace('-','/').split('/')
+    date_to_print = str(date_to_print[2]+'/'+date_to_print[1]+'/'+date_to_print[0])
+    date_to_print = datetime.strptime(date_to_print,'%d/%m/%Y')
     CREDENTIALS_FILE = 'zwrotylm_sekret.json'
     # ID Google Sheets документа (можно взять из его URL)
     spreadsheet_id = '1ctyFK5xqUz40R5Kx0ksPYJ0bEqmMz4sVGbXFey9LfgA'
@@ -378,8 +384,9 @@ def gswrite(request):
     rows = result.get('values', [])
     coordinateU=int((len(rows)))+1
 
-    #datetime_object = datetime.strptime('2022-01-09', "%Y-%m-%d").date()
-    list_order_today = Order.objects.filter(date_writes= date.today())#виклик функції для генерації запису в google sheets date.today()
+    #datetime_object = datetime.strptime('2022-07-20', "%Y-%m-%d").date()
+    list_order_today = Order.objects.filter(date_writes= date_to_print)
+    #list_order_today = Order.objects.filter(date_writes= date.today())#виклик функції для генерації запису в google sheets date.today()
     #list_order_today = Order.objects
     #print(list_order_today)
     values = gen_value_for_gsheet(list_order_today)
