@@ -23,6 +23,8 @@ import pymongo
 import requests
 from bs4 import BeautifulSoup
 
+import time
+
 def get_name_sku_from_website_LM(sku):
     
     link = f"https://www.leroymerlin.pl/szukaj.html?q={sku}&sprawdz=true"
@@ -31,10 +33,10 @@ def get_name_sku_from_website_LM(sku):
     
     return(name_of_product_and_sku)
 
-def get_soup(url):
+def   get_soup(url):
     
-    r = requests.get(url )
-    
+    r =  requests.get(url)
+    time.sleep(2)
     if r == None:
         return None
     else:
