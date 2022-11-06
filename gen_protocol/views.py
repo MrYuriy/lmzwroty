@@ -23,7 +23,7 @@ import pymongo
 import requests
 from bs4 import BeautifulSoup
 
-import time
+
 
 def get_name_sku_from_website_LM(sku):
     
@@ -31,12 +31,13 @@ def get_name_sku_from_website_LM(sku):
     name_of_product_and_sku =get_name_sku_of_product(link)
     print(sku)
     
-    return(name_of_product_and_sku)
+    #return(name_of_product_and_sku)
+    return(sku)
 
 def   get_soup(url):
     
     r =  requests.get(url)
-    time.sleep(2)
+  
     if r == None:
         return None
     else:
