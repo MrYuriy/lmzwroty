@@ -13,7 +13,7 @@ from reportlab.pdfbase.ttfonts import TTFont
 
 from datetime import date, datetime
 import httplib2
-import apiclient.discovery
+
 from oauth2client.service_account import ServiceAccountCredentials
 import os
 #import parser 
@@ -27,6 +27,7 @@ def get_name_sku_from_website_LM(sku):
     
     link = f"https://www.leroymerlin.pl/szukaj.html?q={sku}&sprawdz=true"
     name_of_product_and_sku =get_name_sku_of_product(link)
+    print(sku)
     
     return(name_of_product_and_sku)
 
