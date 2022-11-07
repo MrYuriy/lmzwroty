@@ -13,6 +13,7 @@ from reportlab.pdfbase.ttfonts import TTFont
 
 from datetime import date, datetime
 import httplib2
+import apiclient.discovery
 
 from oauth2client.service_account import ServiceAccountCredentials
 import os
