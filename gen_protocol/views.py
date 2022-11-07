@@ -29,13 +29,13 @@ def get_name_sku_from_website_LM(sku):
     
     link = f"https://www.leroymerlin.pl/szukaj.html?q={sku}&sprawdz=true"
     name_of_product_and_sku =get_name_sku_of_product(link)
-    print(sku)
+    print('!!!!!!!!!!!!!!!!!!',sku)
     
-    #return(name_of_product_and_sku)
-    return(sku)
+    return(name_of_product_and_sku)
+    #eturn(sku)
 
 def   get_soup(url):
-    
+    print('url---',url)
     r =  requests.get(url)
   
     if r == None:
@@ -48,7 +48,7 @@ def   get_soup(url):
 
 def get_name_sku_of_product(url):
     soup = get_soup(url)
-
+    print(soup)
     name_of_product = soup.find('div', class_="product-description").find('div',class_="product-title" ).find('h1').string
     sku = int(soup.find('div', class_="product-description").find('div', class_="ref-number").find('span').string)
     resolt = {"name_of_product":name_of_product, "sku":sku}
