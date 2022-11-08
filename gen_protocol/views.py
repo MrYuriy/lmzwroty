@@ -28,15 +28,15 @@ from bs4 import BeautifulSoup
 
 def get_name_sku_from_website_LM(sku):
     
-    link = f"https://www.leroymerlin.pl/szukaj.html?q={sku}&sprawdz=true"
-    name_of_product_and_sku =get_name_sku_of_product(link)
-    print('!!!!!!!!!!!!!!!!!!',sku)
+    #link = f"https://www.leroymerlin.pl/szukaj.html?q={sku}&sprawdz=true"
+    name_of_product_and_sku =get_name_sku_of_product(sku)
+    
     
     return(name_of_product_and_sku)
     #eturn(sku)
 
 def get_soup(url):
-    print('url---',url)
+    
 
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36',}
     r = requests.get(url, headers=headers)
@@ -49,9 +49,10 @@ def get_soup(url):
 
 
 
-def get_name_sku_of_product(url):
+def get_name_sku_of_product(sku):
+    url = 'https://retranslator.vercel.app/?sku='+str(sku)
     soup = get_soup(url)
-    print(soup)
+    
     name_of_product = soup.find('div', class_="product-description").find('div',class_="product-title" ).find('h1').string
     sku = int(soup.find('div', class_="product-description").find('div', class_="ref-number").find('span').string)
     resolt = {"name_of_product":name_of_product, "sku":sku}
