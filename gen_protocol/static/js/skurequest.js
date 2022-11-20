@@ -9,6 +9,7 @@ $("#sku").focusout(function () {
         dataType: 'json',
         success: function (data) {
           document.getElementById('p-text').innerHTML = data["response"];
+          $("#imgproduct").attr("src",data["imgsrc"]);
         }
       });
   }

@@ -55,12 +55,18 @@ def get_name_sku_of_product(sku):
     
     name_of_product = soup.find('div', class_="product-description").find('div',class_="product-title" ).find('h1').string
     sku = int(soup.find('div', class_="product-description").find('div', class_="ref-number").find('span').string)
-    resolt = {"name_of_product":name_of_product, "sku":sku}
+    #print("print ok")
+    try:
+        imgsrc = soup.find('div',class_='product-gallery').find('div',class_='photo-container').find_all('a')[0].find('img').get('src')
+        #print(imgsrc)
+    except:
+        imgsrc = ''
+    resolt = {"name_of_product":name_of_product, "sku":sku, "imgsrc":imgsrc}
     #print (resolt) 
     return(resolt)
 
 
-def return_name_of_product (sku_r):
+def return_sku_information (sku_r):
     try:
         
         name_of_product = SkuName.objects.filter(sku = int(sku_r)).last().name_of_produckt
@@ -68,7 +74,9 @@ def return_name_of_product (sku_r):
         #print(SkuName.objects.filter(sku = int ))
         #name_of_product = get_name_sku_from_website_LM(int(sku_r))[name_of_product]
         if (len(name_of_product)<=24):
-            return name_of_product
+            imgsrc = information_of_produckt['imgsrc']
+            sku_information = {"name_of_product":name_of_product,"imgsrc":imgsrc}
+            return sku_information
         if name_of_product[24]!=" ":
             name_of_product = name_of_product[:24]
             
@@ -77,26 +85,36 @@ def return_name_of_product (sku_r):
             name_of_product = ' '.join(map(str, name_of_product))
         else:
             name_of_product = name_of_product[:24]
-        return name_of_product
+        imgsrc = information_of_produckt['imgsrc']
+        sku_information = {"name_of_product":name_of_product,"imgsrc":imgsrc}
+        return sku_information
     except:
         try :
-            name_of_product= get_name_sku_from_website_LM(sku_r)['name_of_product']
-            sku_r = get_name_sku_from_website_LM(sku_r)['sku']
-           
+            information_of_produckt=get_name_sku_from_website_LM(sku_r)
+            name_of_product= information_of_produckt['name_of_product']
+            if (len(name_of_product)<=24):
+                name_of_product = name_of_product
+            else:
+                if name_of_product[24]!=" ":
+                    name_of_product = name_of_product[:24]
+                    
+                    name_of_product = name_of_product.split(' ')
+                    name_of_product = name_of_product[:-1]
+                    name_of_product = ' '.join(map(str, name_of_product))
+                else:
+                    name_of_product = name_of_product[:24]
+            sku_r = information_of_produckt['sku']
+            imgsrc = information_of_produckt['imgsrc']
+            
             product = SkuName(sku=sku_r, name_of_produckt = name_of_product)
             product.save()
-           
-            
-        # except : 
-        #     name_of_product= get_name_sku_from_website_LM(sku_r)['name_of_product']
-        #     print(sku_r)
-        #     #print(name_of_product)
-        #     product = SkuName(sku=sku_r, name_of_produckt = name_of_product)
-        #     product.save()
-        #     print (product)
+
         except:
             name_of_product = "name not found"
-        return name_of_product
+    
+        sku_information = {"name_of_product":name_of_product,"imgsrc":imgsrc}
+        #print(sku_information)
+        return sku_information
 
 
  
@@ -115,9 +133,12 @@ def new_order(request):
 
 def show_name(request):
     user_input = request.GET.get('sku')
-    name_of_product = return_name_of_product(user_input)
+    information_to_show = return_sku_information(user_input)
+    print(information_to_show)
+    name_of_product = information_to_show['name_of_product']
+    src = information_to_show['imgsrc']
     # print(name_of_product)
-    data = {'response': f'Name of product: {name_of_product}',}
+    data = {'response': f'Name of product: {name_of_product}','imgsrc':src}
     return JsonResponse(data)
 
 def saveorder(request):
@@ -141,11 +162,13 @@ def add_product_to_order(request):
     q_damage_products = int(quantity)-int(quantity_not_damaget)
     if ( sku_product=='' or quantity==''or quantity_not_damaget=='' ):
         return HttpResponse(status = 200)
-
-    name_of_product = return_name_of_product(sku_product)
+    print (sku_product)
+    name_of_product = return_sku_information(sku_product)['name_of_product']
+    print ('!!!!!!!!!!!!',name_of_product)
 
     order = Order.objects.filter(nr_order=nrorder).last()
     id_order = order.id
+    
     #
     if OrderProduct.objects.filter(order_id=id_order,product__sku=sku_product ):
         order_product = OrderProduct.objects.get(order_id=id_order,product__sku=sku_product )
@@ -162,8 +185,10 @@ def add_product_to_order(request):
     else:
         new_product = Product(name = name_of_product,sku=sku_product, quantity=quantity, quantity_not_damaget=quantity_not_damaget , quantity_damage=q_damage_products)
         new_product.save()
+        print("ok here !!!!!!!!!!!!!!!!!!!!")
         order_product = OrderProduct(order=order, product=new_product)
         order_product.save()
+    print(order)
     
     return HttpResponse(status = 200)
 
@@ -306,7 +331,7 @@ def generate_pdf_returned_products(request):
                     Y=610
                     counter=0
                 my_canvas.drawString(55,Y,str(product[0]))
-                name_of_product = str(return_name_of_product(product[0]))[:25]
+                name_of_product = str(return_sku_information(product[0])['name_of_product'])[:25]
                 my_canvas.drawString(131,Y, name_of_product )
                 my_canvas.drawString(310,Y,str(product[1]))
                 my_canvas.drawString(380,Y,str(dicts[1]))
@@ -338,7 +363,7 @@ def gen_value_for_gsheet(nr_order_list):
             list_row = []
             list_row.append(date_writes)
             list_row.append(sku[0])
-            list_row.append(return_name_of_product(sku[0]))
+            list_row.append(return_sku_information(sku[0])['name_of_product'])
             list_row.append(sku[1])#кількість продукту
             list_row.append('')
             list_row.append('')
@@ -354,7 +379,7 @@ def gen_value_for_gsheet(nr_order_list):
             list_row = []
             list_row.append(date_writes)
             list_row.append(sku[0])
-            list_row.append(return_name_of_product(sku[0]))
+            list_row.append(return_sku_information(sku[0])['name_of_product'])
             list_row.append(sku[1])#кількість продукту
             list_row.append('')
             list_row.append('')
