@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'gen_protocol',
     'gsheets',
+    'topy',
     #'account',
     
 ]

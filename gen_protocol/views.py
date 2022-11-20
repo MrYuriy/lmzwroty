@@ -57,8 +57,10 @@ def get_name_sku_of_product(sku):
     sku = int(soup.find('div', class_="product-description").find('div', class_="ref-number").find('span').string)
     #print("print ok")
     try:
-        imgsrc = soup.find('div',class_='product-gallery').find('div',class_='photo-container').find_all('a')[0].find('img').get('src')
-        #print(imgsrc)
+        try:
+            imgsrc = soup.find('div',class_='product-gallery').find('div',class_='photo-container').find_all('a')[0].find('img').get('src')
+        except:
+            imgsrc = soup.find('div',class_='product-gallery').find('div',class_='photo-container').find('img').get('src')
     except:
         imgsrc = ''
     resolt = {"name_of_product":name_of_product, "sku":sku, "imgsrc":imgsrc}
