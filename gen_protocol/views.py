@@ -72,7 +72,7 @@ def return_sku_information (sku_r):
     try:
         
         name_of_product = SkuName.objects.filter(sku = int(sku_r)).last().name_of_produckt
-        
+        information_of_produckt = get_name_sku_of_product(sku_r)
         #print(SkuName.objects.filter(sku = int ))
         #name_of_product = get_name_sku_from_website_LM(int(sku_r))[name_of_product]
         if (len(name_of_product)<=24):
@@ -94,9 +94,7 @@ def return_sku_information (sku_r):
         try :
             information_of_produckt=get_name_sku_from_website_LM(sku_r)
             name_of_product= information_of_produckt['name_of_product']
-            if (len(name_of_product)<=24):
-                name_of_product = name_of_product
-            else:
+            if (len(name_of_product)>25):
                 if name_of_product[24]!=" ":
                     name_of_product = name_of_product[:24]
                     
@@ -107,11 +105,12 @@ def return_sku_information (sku_r):
                     name_of_product = name_of_product[:24]
             sku_r = information_of_produckt['sku']
             imgsrc = information_of_produckt['imgsrc']
-            
+            print(name_of_product)
             product = SkuName(sku=sku_r, name_of_produckt = name_of_product)
             product.save()
 
         except:
+            imgsrc =''
             name_of_product = "name not found"
     
         sku_information = {"name_of_product":name_of_product,"imgsrc":imgsrc}
