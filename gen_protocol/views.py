@@ -135,7 +135,7 @@ def new_order(request):
 def show_name(request):
     user_input = request.GET.get('sku')
     information_to_show = return_sku_information(user_input)
-    print(information_to_show)
+    #print(information_to_show)
     name_of_product = information_to_show['name_of_product']
     src = information_to_show['imgsrc']
     # print(name_of_product)
