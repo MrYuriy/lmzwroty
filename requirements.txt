@@ -49,3 +49,4 @@ whitenoise==5.3.0
 python-dotenv
 apiclient==1.0.4
 openpyxl==3.0.10
+dj_database_url
