@@ -15,7 +15,7 @@ import os
 import django_heroku
 from os import getenv
 from dotenv import load_dotenv, find_dotenv
-#import dj_database_url
+import dj_database_url
 
 load_dotenv(find_dotenv())
 
@@ -90,24 +90,26 @@ WSGI_APPLICATION = 'zwroty.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': getenv('DB_NAME'),
-        'HOST': getenv('DB_HOST'),
-        'PORT': getenv('DB_PORT'),
-        'USER': getenv('DB_USER'),
-        'PASSWORD': getenv('DB_PASSWORD'),
-    }
-}
-
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': getenv('DB_NAME'),
+#         'HOST': getenv('DB_HOST'),
+#         'PORT': getenv('DB_PORT'),
+#         'USER': getenv('DB_USER'),
+#         'PASSWORD': getenv('DB_PASSWORD'),
 #     }
 # }
 
+
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
+DATABASES['default'] = dj_database_url.parse('postgres://yurii:LO0rGWxEgH9g9bl3bG7dkeMSvOPwF9uY@dpg-ce0hldqrrk09esaclqhg-a.frankfurt-postgres.render.com/zwroty')
 #print ("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",DATABASES)
 
 
