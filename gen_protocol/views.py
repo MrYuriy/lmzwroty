@@ -148,11 +148,6 @@ def saveorder(request):
     if (nrorder!='' and tapeofdelivery!=''  ):
         order = Order( nr_order=int(nrorder), tape_of_delivery = tapeofdelivery, date_writes=date.today())
         order.save()
-
-
-
-
-    # print(order)
     return HttpResponse(status = 200)
 
 def add_product_to_order(request):
@@ -163,9 +158,9 @@ def add_product_to_order(request):
     q_damage_products = int(quantity)-int(quantity_not_damaget)
     if ( sku_product=='' or quantity==''or quantity_not_damaget=='' ):
         return HttpResponse(status = 200)
-    print (sku_product)
+    #print (sku_product)
     name_of_product = return_sku_information(sku_product)['name_of_product']
-    print ('!!!!!!!!!!!!',name_of_product)
+    #print ('!!!!!!!!!!!!',name_of_product)
 
     order = Order.objects.filter(nr_order=nrorder).last()
     id_order = order.id
@@ -186,10 +181,10 @@ def add_product_to_order(request):
     else:
         new_product = Product(name = name_of_product,sku=sku_product, quantity=quantity, quantity_not_damaget=quantity_not_damaget , quantity_damage=q_damage_products)
         new_product.save()
-        print("ok here !!!!!!!!!!!!!!!!!!!!")
+        #print("ok here !!!!!!!!!!!!!!!!!!!!")
         order_product = OrderProduct(order=order, product=new_product)
         order_product.save()
-    print(order)
+    #print(order)
     
     return HttpResponse(status = 200)
 

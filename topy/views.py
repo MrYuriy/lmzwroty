@@ -46,6 +46,7 @@ def core(request):
 
     inventory = get_inventory(inventory_sh)
     ean = get_ean(ean_sh)
+    
     name = get_names(topy_sh)
   
     
@@ -212,15 +213,19 @@ def get_ean(ean_sh):
        ean = ean_sh[row][4]
        sku_row.append(sku)
        ean_row.append(ean)
-
+    
     ean_list = []
     suplier_dict = {}
     for s_row, e_row in zip(sku_row,ean_row):
+        
         if e_row.value not in ean_list:
+            #print(s_row.value, e_row.value)
             ean_list.append(e_row.value)
             if s_row.value in suplier_dict :
                 suplier_dict[s_row.value].append(e_row.value)
+                
             else:
+               #print(s_row.value)
                suplier_dict[s_row.value]= [e_row.value]
     return(suplier_dict)
 # обєднання адресів з врхіву і трансакшенів
