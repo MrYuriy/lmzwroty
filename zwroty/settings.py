@@ -90,27 +90,27 @@ WSGI_APPLICATION = 'zwroty.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': getenv('DB_NAME'),
-#         'HOST': getenv('DB_HOST'),
-#         'PORT': getenv('DB_PORT'),
-#         'USER': getenv('DB_USER'),
-#         'PASSWORD': getenv('DB_PASSWORD'),
-#     }
-# }
-
-
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': getenv('DB_NAME'),
+        'HOST': getenv('DB_HOST'),
+        'PORT': getenv('DB_PORT'),
+        'USER': getenv('DB_USER'),
+        'PASSWORD': getenv('DB_PASSWORD'),
     }
 }
+
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 #DATABASES['default'].update(dj_database_url.parse('postgres://yurii:LO0rGWxEgH9g9bl3bG7dkeMSvOPwF9uY@dpg-ce0hldqrrk09esaclqhg-a.frankfurt-postgres.render.com/zwroty'))
-DATABASES['default'].update(dj_database_url.parse('postgresql://postgres:YCBTnzzWZwYAhbcDK1oK@containers-us-west-65.railway.app:6972/railway'))
+#DATABASES['default'].update(dj_database_url.parse('postgresql://postgres:YCBTnzzWZwYAhbcDK1oK@containers-us-west-65.railway.app:6972/railway'))
 #print ("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",DATABASES)
 
 
