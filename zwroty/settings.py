@@ -110,7 +110,7 @@ DATABASES = {
     }
 }
 #DATABASES['default'].update(dj_database_url.parse('postgres://yurii:LO0rGWxEgH9g9bl3bG7dkeMSvOPwF9uY@dpg-ce0hldqrrk09esaclqhg-a.frankfurt-postgres.render.com/zwroty'))
-#DATABASES['default'].update(dj_database_url.parse('postgresql://postgres:YCBTnzzWZwYAhbcDK1oK@containers-us-west-65.railway.app:6972/railway'))
+DATABASES['default'].update(dj_database_url.parse('postgresql://postgres:YCBTnzzWZwYAhbcDK1oK@containers-us-west-65.railway.app:6972/railway'))
 #print ("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",DATABASES)
 
 

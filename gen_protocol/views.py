@@ -184,7 +184,7 @@ def add_product_to_order(request):
         new_product = Product(name = name_of_product,sku=sku_product, quantity=quantity, quantity_not_damaget=quantity_not_damaget , quantity_damage=q_damage_products)
         new_product.save()
         #print("ok here !!!!!!!!!!!!!!!!!!!!")
-        order_product = OrderProduct(order=order, product=new_product)
+        order_product = OrderProduct(order=order, product=new_product, date_writes=date.today())
         order_product.save()
     #print(order)
     
@@ -218,13 +218,14 @@ def show_detail_order(request):#доробити як буде скучно !!!!
     return HttpResponse(products)
 
 # def get_order_detail(o_id):
-def get_order_detail(order):
+def get_order_detail(order, orderproducs):
     #order = Order.objects.filter(nr_order = nrorder).last()
     # id_order = o_id
     # order = Order.objects.get(id = o_id)
     tape_of_delivery = order.tape_of_delivery
     date_writes = order.date_writes
-    orderproducs = OrderProduct.objects.filter(order_id = order.id)
+    # orderproducs = OrderProduct.objects.filter(order_id = order.id)
+    # orderproducs = 
     date_to_print_order = {'not_damage':None,'damage':None,'tape_of_delivery':None}
     sku_quantity_damage = []
     sku_quantity_not_damage = []
@@ -255,7 +256,8 @@ def generate_pdf_lm(request):
     #print("okkkk")
     nrorder = request.GET.get('nrorder')
     order = Order.objects.filter(nr_order=nrorder).last()
-    orderdetail = get_order_detail(order)
+    order_products = OrderProduct.objects.filter(order_id = order.id)
+    orderdetail = get_order_detail(order, order_products)
     list_not_damage_product = orderdetail['not_damage']
     list_damage_product = orderdetail['damage']
     buffer = io.BytesIO()
@@ -300,6 +302,7 @@ def generate_pdf_returned_products(request):
     my_canvas.drawImage('static/img/returned_products_order.jpg' ,-10, 0, width=622, height=850)
     my_canvas.setFont('FreeSans', 12)#розмір шрифту і вид шрифту   
     list_order_today = Order.objects.filter(date_writes = date_to_print)#date.today() dont foget set tis pharamether
+    order_products = OrderProduct.objects.filter(date_writes = date_to_print)
     #list_order_today = Order.objects.all()
     Y=610
     counter = 0
@@ -312,7 +315,7 @@ def generate_pdf_returned_products(request):
                     my_canvas.drawImage('static/img/returned_products_order.jpg' ,-10, 0, width=622, height=850)
                     Y=610
                     counter=0
-        all_about_order=get_order_detail(order)
+        all_about_order=get_order_detail(order, order_products.filter(order_id = order.id))
         my_canvas.drawString(440,Y,str(all_about_order['tape_of_delivery']))
         #my_canvas.drawString(500,Y,str(nrorder))
         if str(nrorder) == "0":
@@ -346,17 +349,20 @@ def generate_excel_products_order_today(request):
     return render(request,'gen_protocol/write_excel.html',{"data_today":date.today().strftime("%Y-%m-%d")})
  
 
-def gen_value_for_gsheet(nr_order_list):
+def gen_value_for_gsheet(orders, order_products):
     values=[]
     not_damage_list = []
     damage_list = []
-    for order in nr_order_list:
-
-        products_list_not_damage = get_order_detail(int(order.id))['not_damage']
-        products_list_damage = get_order_detail(int(order.id))['damage']
+    for order in orders:
+        orderproduct = order_products.filter(order_id = order.id)
+        detail_order = get_order_detail(order, orderproduct)
+        products_list_not_damage = detail_order['not_damage']
+        products_list_damage = detail_order['damage']
+        # products_list_not_damage = get_order_detail(int(order))['not_damage']
+        # products_list_damage = get_order_detail(int(order))['damage']
         # print(str(get_order_detail(int(order.nr_order))['date_writes']))
         # print(str(get_order_detail(int(order.nr_order))['date_writes'].strftime("%d.%m.%Y")))
-        date_writes = str(get_order_detail(int(order.id))['date_writes'].strftime("%d.%m.%Y"))
+        date_writes = detail_order['date_writes'].strftime("%d.%m.%Y")
         #print('product list- :',products_list_not_damage)
         for sku in products_list_not_damage:
             list_row = []
@@ -418,10 +424,10 @@ def gswrite(request):
 
     #datetime_object = datetime.strptime('2022-07-20', "%Y-%m-%d").date()
     list_order_today = Order.objects.filter(date_writes= date_to_print)
-    #list_order_today = Order.objects.filter(date_writes= date.today())#виклик функції для генерації запису в google sheets date.today()
-    #list_order_today = Order.objects
-    #print(list_order_today)
-    values = gen_value_for_gsheet(list_order_today)
+    order_products = OrderProduct.objects.filter(date_writes = date_to_print)
+    
+
+    values = gen_value_for_gsheet(list_order_today, order_products)
     #values = gen_value_for_gsheet([555,999])
 
     value=[
