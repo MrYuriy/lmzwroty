@@ -50,7 +50,9 @@ def get_soup(url):
 
 
 def get_name_sku_of_product(sku):
-    url = 'https://retranslator.vercel.app/?sku='+str(sku)
+    #url = 'https://retranslator.vercel.app/?sku='+str(sku)
+    
+    url = f"https://www.leroymerlin.pl/szukaj.html?q={sku}&sprawdz=true"
     soup = get_soup(url)
     
     name_of_product = soup.find('div', class_="product-description").find('div',class_="product-title" ).find('h1').string
