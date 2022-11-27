@@ -215,13 +215,14 @@ def show_detail_order(request):#доробити як буде скучно !!!!
         products.append(name)
     return HttpResponse(products)
 
-def get_order_detail(o_id):
+# def get_order_detail(o_id):
+def get_order_detail(order):
     #order = Order.objects.filter(nr_order = nrorder).last()
-    id_order = o_id
-    order = Order.objects.get(id = o_id)
+    # id_order = o_id
+    # order = Order.objects.get(id = o_id)
     tape_of_delivery = order.tape_of_delivery
     date_writes = order.date_writes
-    orderproducs = OrderProduct.objects.filter(order_id = id_order)
+    orderproducs = OrderProduct.objects.filter(order_id = order.id)
     date_to_print_order = {'not_damage':None,'damage':None,'tape_of_delivery':None}
     sku_quantity_damage = []
     sku_quantity_not_damage = []
@@ -252,7 +253,7 @@ def generate_pdf_lm(request):
     #print("okkkk")
     nrorder = request.GET.get('nrorder')
     order = Order.objects.filter(nr_order=nrorder).last()
-    orderdetail = get_order_detail(order.id)
+    orderdetail = get_order_detail(order)
     list_not_damage_product = orderdetail['not_damage']
     list_damage_product = orderdetail['damage']
     buffer = io.BytesIO()
@@ -309,7 +310,7 @@ def generate_pdf_returned_products(request):
                     my_canvas.drawImage('static/img/returned_products_order.jpg' ,-10, 0, width=622, height=850)
                     Y=610
                     counter=0
-        all_about_order=get_order_detail(order.id)
+        all_about_order=get_order_detail(order)
         my_canvas.drawString(440,Y,str(all_about_order['tape_of_delivery']))
         #my_canvas.drawString(500,Y,str(nrorder))
         if str(nrorder) == "0":
