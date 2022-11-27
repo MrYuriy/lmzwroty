@@ -324,7 +324,7 @@ def generate_pdf_returned_products(request):
             my_canvas.drawString(500,Y,str(nrorder))
 
         for dicts in [[all_about_order['not_damage'],'P'],[all_about_order['damage'],'U']]:
-            
+            i = 0
             for product in dicts[0]:
                 if counter==21:
                     my_canvas.showPage()
@@ -333,12 +333,16 @@ def generate_pdf_returned_products(request):
                     Y=610
                     counter=0
                 my_canvas.drawString(55,Y,str(product[0]))
-                name_of_product = str(return_sku_information(product[0])['name_of_product'])[:25]
+                #name_of_product = str(return_sku_information(product[0])['name_of_product'])[:25]
+                #print (order_products.filter(order_id = order.id)[i].product)
+                
+                name_of_product = (order_products.filter(order_id = order.id)[i]).product.name
                 my_canvas.drawString(131,Y, name_of_product )
                 my_canvas.drawString(310,Y,str(product[1]))
                 my_canvas.drawString(380,Y,str(dicts[1]))
                 counter +=1
                 Y-=21
+                i+=1
                 
     my_canvas.showPage()
     my_canvas.save()
