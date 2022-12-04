@@ -358,45 +358,76 @@ def gen_value_for_gsheet(orders, order_products):
     not_damage_list = []
     damage_list = []
     for order in orders:
-        orderproduct = order_products.filter(order_id = order.id)
-        detail_order = get_order_detail(order, orderproduct)
-        products_list_not_damage = detail_order['not_damage']
-        products_list_damage = detail_order['damage']
-        # products_list_not_damage = get_order_detail(int(order))['not_damage']
-        # products_list_damage = get_order_detail(int(order))['damage']
-        # print(str(get_order_detail(int(order.nr_order))['date_writes']))
-        # print(str(get_order_detail(int(order.nr_order))['date_writes'].strftime("%d.%m.%Y")))
-        date_writes = detail_order['date_writes'].strftime("%d.%m.%Y")
-        #print('product list- :',products_list_not_damage)
-        for sku in products_list_not_damage:
-            list_row = []
-            list_row.append(date_writes)
-            list_row.append(sku[0])
-            list_row.append(return_sku_information(sku[0])['name_of_product'])
-            list_row.append(sku[1])#кількість продукту
-            list_row.append('')
-            list_row.append('')
-            list_row.append(int(order.nr_order))
-            list_row.append('')
-            list_row.append('')
-            #print('list row-: ',list_row)
-            not_damage_list.append(list_row)
-        values.append(not_damage_list)
+        all_product_in_order = OrderProduct.objects.filter(order_id = order.id)
+        for product in all_product_in_order:
+            product = product.product
+            if product.quantity_not_damaget:
+                list_row = []
+                list_row.append((order.date_writes).strftime("%d.%m.%Y"))
+                list_row.append(product.sku)
+                list_row.append(product.name)
+                list_row.append(product.quantity_not_damaget)
+                list_row.append('')
+                list_row.append('')
+                list_row.append(int(order.nr_order))
+                list_row.append('')
+                list_row.append('')
+                not_damage_list.append(list_row)
+            if product.quantity_damage:
+                list_row = []
+                list_row.append((order.date_writes).strftime("%d.%m.%Y"))
+                list_row.append(product.sku)
+                list_row.append(product.name)
+                list_row.append(product.quantity_damage)
+                list_row.append('')
+                list_row.append('')
+                list_row.append(int(order.nr_order))
+                list_row.append('')
+                list_row.append('')
+                damage_list.append(list_row)
+    values.append(not_damage_list)
+    values.append(damage_list)
+    #print(values)
+    # for order in orders:
+    #     orderproduct = order_products.filter(order_id = order.id)
+    #     detail_order = get_order_detail(order, orderproduct)
+    #     products_list_not_damage = detail_order['not_damage']
+    #     products_list_damage = detail_order['damage']
+    #     # products_list_not_damage = get_order_detail(int(order))['not_damage']
+    #     # products_list_damage = get_order_detail(int(order))['damage']
+    #     # print(str(get_order_detail(int(order.nr_order))['date_writes']))
+    #     # print(str(get_order_detail(int(order.nr_order))['date_writes'].strftime("%d.%m.%Y")))
+    #     date_writes = detail_order['date_writes'].strftime("%d.%m.%Y")
+    #     #print('product list- :',products_list_not_damage)
+    #     for sku in products_list_not_damage:
+    #         list_row = []
+    #         list_row.append(date_writes)
+    #         list_row.append(sku[0])
+    #         list_row.append(return_sku_information(sku[0])['name_of_product'])
+    #         list_row.append(sku[1])#кількість продукту
+    #         list_row.append('')
+    #         list_row.append('')
+    #         list_row.append(int(order.nr_order))
+    #         list_row.append('')
+    #         list_row.append('')
+    #         #print('list row-: ',list_row)
+    #         not_damage_list.append(list_row)
+    #     values.append(not_damage_list)
 
-        for sku in products_list_damage:
-            list_row = []
-            list_row = []
-            list_row.append(date_writes)
-            list_row.append(sku[0])
-            list_row.append(return_sku_information(sku[0])['name_of_product'])
-            list_row.append(sku[1])#кількість продукту
-            list_row.append('')
-            list_row.append('')
-            list_row.append(int(order.nr_order))
-            list_row.append('')
-            list_row.append('')
-            damage_list.append(list_row)
-        values.append(damage_list)
+    #     for sku in products_list_damage:
+    #         list_row = []
+    #         list_row.append(date_writes)
+    #         list_row.append(sku[0])
+    #         list_row.append(return_sku_information(sku[0])['name_of_product'])
+    #         list_row.append(sku[1])#кількість продукту
+    #         list_row.append('')
+    #         list_row.append('')
+    #         list_row.append(int(order.nr_order))
+    #         list_row.append('')
+    #         list_row.append('')
+    #         damage_list.append(list_row)
+    #     values.append(damage_list)
+
     # print(values)
     return values
 
