@@ -483,5 +483,5 @@ def gswrite(request):
     }
     ).execute()
 
-    return HttpResponse(status = 200)
+    return render(request, 'gen_protocol/home.html')
 #zdfjsfjkla
