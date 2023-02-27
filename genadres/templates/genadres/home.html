@@ -1,0 +1,27 @@
+{% extends "genadres/base.html" %}
+
+{% block title %} Home page {% endblock %}
+{%block navigation %}
+{% endblock %}
+{% block content %}
+<div class="btn-group-vertical" margin:10>
+    
+    <form  action="get-sheet">
+        {% comment %} {% csrf_token %} {% endcomment %}
+
+        
+        <select name="username" id="username"class="form-select" aria-label="Default select example" required>
+            <option  disabled selected value="" >Users :</option>
+            {% for user in users %}
+            <option value="{{user}}">{{user}}</option>
+            {% endfor %}
+        </select>
+        
+        <br>
+        <input class="btn btn-primary" type="submit" value="Kontynuować" id="continue">
+        
+    </form>
+</div>  
+{% endblock %}
+
+

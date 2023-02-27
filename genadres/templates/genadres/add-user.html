@@ -1,0 +1,46 @@
+{% extends "genadres/base.html" %}
+
+{% block title %} New User {% endblock %}
+{%block navigation %}
+{% endblock %}
+{% block content %}
+
+
+<div class="btn-group-vertical" margin:10>
+    
+    <form  action="{% url 'save_user' %}">
+        {% comment %} {% csrf_token %} {% endcomment %}
+        
+        <div class="input-group mb-3" type="text", >
+            <span class="input-group-text" id="inputGroup-sizing-default">User name:</span>
+            <input type="text" name="user-name" id="user" autofocus="" class="form-control" required aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+          </div>
+        
+        {% for parametr in user_parametrs %}
+        <br>
+            <select name="{{parametr}}" id="{{parametr}}"class="form-select" aria-label="Default select example" required>
+            <option  disabled selected value="" >{{parametr}}</option>
+
+            {% for item in alphabet %}
+            <option value="{{item}}">{{item}}</option>
+            {% endfor %}
+
+        </select>
+        {% endfor %}
+
+        <br>
+        <input class="btn btn-primary" type="submit" value="Kontynuować" id="save">
+        
+    </form>
+</div>  
+
+<script type="text/javascript" src="{{ STATIC_URL }} /static/jquery-3.6.0.min.js"> </script>
+<script type="text/javascript" src="{{ STATIC_URL }} /static/js/create_user.js"> </script>
+{% endblock %}
+
+
+
+
+
+
+
