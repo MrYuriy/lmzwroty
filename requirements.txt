@@ -50,3 +50,6 @@ python-dotenv
 apiclient==1.0.4
 openpyxl==3.0.10
 dj_database_url
+
+django-cors-headers==3.13.0
+djangorestframework==3.13.1
