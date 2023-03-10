@@ -15,7 +15,6 @@ from django.shortcuts import redirect
 class GenadresView(APIView):
     permission_classes = [permissions.AllowAny]
     def post(self, request, *args, **kwargs):
-        print("ok!!")
         inventory_adreses = request.data['inventory_adreses']
         inventory_qtys = request.data['inventory_qtys']
         adreses = request.data['adreses'] + request.data['adreses_archive'] 
@@ -83,6 +82,7 @@ class GenadresView(APIView):
                     inventory_dictionary[adreses[i]] = int(inventory_qtys[i])
             return (inventory_dictionary)
         return {}
+
     def adrese_and_qantity(self, adreses_list, inventory_dictionary):
         resolt = []
         if not adreses_list :
