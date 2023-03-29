@@ -25,38 +25,41 @@ class GenadresView(APIView):
         return Response({"list_adreses":  resolt}, status=status.HTTP_200_OK)
 
     def filter(self, adres):
-        adres = str(adres)
-        adres = adres.replace('-','')
-        if adres=='' or adres == None or len(adres)<=4:
-            return False
-        # куветки   K*******  K1204503  // вяти      W**** W0123 // карнизи   D**** D1330 
-        if adres[0]=='K' or adres[0]=='W' or adres[0]=='D':
-            if adres[1:].isdigit():
-                return True
-            else:
+        try:
+            adres = str(adres)
+            adres = adres.replace('-','')
+            if adres=='' or adres == None or len(adres)<=4:
                 return False
+            # куветки   K*******  K1204503  // вяти      W**** W0123 // карнизи   D**** D1330 
+            if adres[0]=='K' or adres[0]=='W' or adres[0]=='D':
+                if adres[1:].isdigit():
+                    return True
+                else:
+                    return False
 
-        elif (adres[0:1]=="WK" or adres[0:1]=="WS") and adres[2:].isdigit():
-            return True
-                
-        # регали    **R****L** 01R2104A10 01R1027A15 01R0517H1
-        elif adres!="PARKING" and adres[2]=='R' and adres[7].isalpha():
-            if adres[0:2].isdigit() and adres[3:7].isdigit():
+            elif (adres[0:1]=="WK" or adres[0:1]=="WS") and adres[2:].isdigit():
                 return True
-            else:
-                return False
-        # маси      **M*** 01M242   01M525-20 01M316-03
-        elif adres[2]=='M':
-            if adres[3:].isdigit():
-                return True
-            else:
-                return False
+                    
+            # регали    **R****L** 01R2104A10 01R1027A15 01R0517H1
+            elif adres!="PARKING" and adres[2]=='R' and adres[7].isalpha():
+                if adres[0:2].isdigit() and adres[3:7].isdigit():
+                    return True
+                else:
+                    return False
+            # маси      **M*** 01M242   01M525-20 01M316-03
+            elif adres[2]=='M':
+                if adres[3:].isdigit():
+                    return True
+                else:
+                    return False
 
-        elif adres[:8]=="SZYB-ZAM" :
-            return True
-        elif adres=='INRACK80':
-            return True
-        else:
+            elif adres[:8]=="SZYB-ZAM" :
+                return True
+            elif adres=='INRACK80':
+                return True
+            else:
+                return False
+        except:
             return False
 
     
