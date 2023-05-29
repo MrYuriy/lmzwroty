@@ -111,8 +111,8 @@ DATABASES = {
     }
 }
 
-DATABASES['default'].update(dj_database_url.parse('postgres://yurii:7Jm3Y1TbHgrrsqtPpy0ZVgXWv2TTWlqu@dpg-cfu7bvqrrk0c830vikbg-a.frankfurt-postgres.render.com/zwroty_jzxz'))
-
+#DATABASES['default'].update(dj_database_url.parse('postgres://yurii:7Jm3Y1TbHgrrsqtPpy0ZVgXWv2TTWlqu@dpg-cfu7bvqrrk0c830vikbg-a.frankfurt-postgres.render.com/zwroty_jzxz'))
+DATABASES['default'].update(dj_database_url.parse("postgres://MrYuriy:N2eoaM8nFbAS@ep-tiny-mountain-818778.eu-central-1.aws.neon.tech/neondb"))
 #DATABASES['default'].update(dj_database_url.parse('postgresql://postgres:YCBTnzzWZwYAhbcDK1oK@containers-us-west-65.railway.app:6972/railway'))
 #print ("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",DATABASES)
 
